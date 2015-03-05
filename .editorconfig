@@ -8,10 +8,6 @@ insert_final_newline = true
 charset = utf-8
 indent_style = tab
 
-# 4 space indentation
-[*.py]
-indent_style = tab
-
 # Indentation override for all everything under lib directory
 [lib/**]
 indent_style = space
