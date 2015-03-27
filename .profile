@@ -1,3 +1,7 @@
+# Modeline and Notes {
+# vim: set sw=4 ts=4 et tw=78 foldmarker={{{,}}} foldlevel=0 foldmethod=marker spell:
+# }
+
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH";
 
