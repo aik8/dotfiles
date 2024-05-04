@@ -1,6 +1,0 @@
-[submodule ".vimrc"]
-	path = .vimrc
-	url = git@github.com:ProteusCortex/vimrc.git
-[submodule ".vimrc.d"]
-	path = .vimrc.d
-	url = git@github.com:ProteusCortex/vimrc.git
