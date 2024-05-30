@@ -119,3 +119,9 @@ if ! shopt -oq posix; then
 fi
 . "$HOME/.cargo/env"
 
+# Raspberry Pi Pico stuff
+export PICO_SDK_PATH="$HOME/Projects/pico/pico-sdk"
+export PICO_EXAMPLES_PATH="$HOME/Projects/pico/pico-examples"
+export PICO_EXTRAS_PATH="$HOME/Projects/pico/pico-extras"
+export PICO_PLAYGROUND_PATH="$HOME/Projects/pico/pico-playground"
+
