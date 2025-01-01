@@ -13,8 +13,8 @@ indent_style = tab
 indent_style = space
 indent_size = 4
 
-# Different indentaion rules for JSON files
-[*.{json}]
+# Different indentaion rules for JSON and YAML files
+[*.{json,yml,yaml}]
 indent_style = space
 indent_size = 2
 
