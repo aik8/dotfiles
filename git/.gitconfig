@@ -3,7 +3,7 @@
 [user]
 	name = Angelos Ioannis Kitsantas
 	email = john@cortex.gr
-	signingkey = E2EC825882CD6A2F
+	signingkey = 2C137366F150C2DF
 [commit]
 	gpgSign = true
 [alias]
