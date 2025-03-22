@@ -13,3 +13,6 @@
 [submodule "tmux/.tmux/plugins/vim-tmux-navigator"]
 	path = tmux/.tmux/plugins/vim-tmux-navigator
 	url = https://git::@github.com/christoomey/vim-tmux-navigator
+[submodule "neovim/.config/nvim"]
+	path = neovim/.config/nvim
+	url = git@github.com:aik8/nvim.git
