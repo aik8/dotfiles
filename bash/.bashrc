@@ -4,8 +4,8 @@
 
 # If not running interactively, don't do anything
 case $- in
-	*i*) ;;
-	  *) return;;
+*i*) ;;
+*) return ;;
 esac
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -37,7 +37,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-	xterm-color|*-256color) color_prompt=yes;;
+xterm-color | *-256color) color_prompt=yes ;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -70,11 +70,10 @@ unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-	xterm*|rxvt*)
-		PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-		;;
-	*)
-		;;
+xterm* | rxvt*)
+	PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+	;;
+*) ;;
 esac
 
 # enable color support of ls and also add handy aliases
@@ -117,11 +116,12 @@ if ! shopt -oq posix; then
 		. /etc/bash_completion
 	fi
 fi
-. "$HOME/.cargo/env"
 
-# Raspberry Pi Pico stuff
-export PICO_SDK_PATH="$HOME/Projects/pico/pico-sdk"
-export PICO_EXAMPLES_PATH="$HOME/Projects/pico/pico-examples"
-export PICO_EXTRAS_PATH="$HOME/Projects/pico/pico-extras"
-export PICO_PLAYGROUND_PATH="$HOME/Projects/pico/pico-playground"
+# Check if this is a remote session, and if it is start a new tmux
+# session or attach to the existing one.
+if [[ $- =~ i ]] && [[ -z "$TMUX" ]] && [[ -n "$SSH_TTY" ]]; then
+	tmux attach-session -t ssh_tmux || tmux new-session -s ssh_tmux
+fi
 
+# Prepare linuxbrew env and path.
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
