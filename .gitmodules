@@ -16,3 +16,6 @@
 [submodule "ssh"]
 	path = ssh
 	url = git@github.com:aik8/dotfiles-ssh.git
+[submodule "neovim/.config/nvim"]
+	path = neovim/.config/nvim
+	url = https://github.com/aik8/nvim.git
