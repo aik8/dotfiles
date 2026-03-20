@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -107,3 +107,11 @@ export EDITOR='nvim'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ls="/opt/homebrew/bin/lsd"
 
+# Make sure that GPG commit signing works on macOS.
+export GPG_TTY=$(tty)
+
+# Run homebrew stuff.
+eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+
+# Set bat as MANPAGER for better man pages.
+export MANPAGER="sh -c 'col -bx | /opt/homebrew/bin/bat -lman'"
