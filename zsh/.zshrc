@@ -105,13 +105,19 @@ export EDITOR='nvim'
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias ls="/opt/homebrew/bin/lsd"
 
 # Make sure that GPG commit signing works on macOS.
 export GPG_TTY=$(tty)
 
 # Run homebrew stuff.
-eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+if [[ $(uname) == "Darwin" ]]; then
+	eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+	alias ls="/opt/homebrew/bin/lsd"
+else
+	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+	alias ls="/usr/bin/lsd"
+fi
 
 # Set neovim as MANPAGER for better man pages.
 export MANPAGER='nvim +Man!'
+
