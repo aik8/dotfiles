@@ -12,13 +12,13 @@ usage() {
 
 # The actual options.
 STOW_ACTION=""
-GIT_ADDITIONAL=""
+GIT_ADDITIONAL="-c submodule.ssh.update=none"
 
 # Go through all the passed parameters.
 for arg in "$@"; do
 	case "$arg" in
 	-d | --delete) STOW_ACTION="-D" ;;
-	--ssh) GIT_ADDITIONAL="-c submodule.ssh.update=none" ;;
+	--ssh) GIT_ADDITIONAL="" ;;
 	*) usage ;;
 	esac
 done
