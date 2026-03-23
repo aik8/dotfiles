@@ -36,7 +36,11 @@ fi
 # ACTION!
 #
 echo "Initializing submodules..."
-git $GIT_ADDITIONAL submodule update --init --recursive
+
+# Only do git stuff if we are not deleting.
+if [ -z "$STOW_ACTION" ]; then
+	git $GIT_ADDITIONAL submodule update --init --recursive --remote
+fi
 
 if [ -n "$STOW_ACTION" ]; then
 	echo "Unstowing packages..."
