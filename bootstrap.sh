@@ -4,18 +4,21 @@
 # Initialization
 #
 usage() {
-	echo "Usage: $0 [-d|--delete]"
+	echo "Usage: $0 [-d|--delete] [--ssh]"
 	echo "  -d, --delete    Delete (unstow) symlinks instead of creating them"
+	echo "  --ssh           Include the ssh submodule when initializing submodules"
 	exit 1
 }
 
 # The actual options.
 STOW_ACTION=""
+GIT_ADDITIONAL=""
 
 # Go through all the passed parameters.
 for arg in "$@"; do
 	case "$arg" in
 	-d | --delete) STOW_ACTION="-D" ;;
+	--ssh) GIT_ADDITIONAL="-c submodule.ssh.update=none" ;;
 	*) usage ;;
 	esac
 done
@@ -33,7 +36,7 @@ fi
 # ACTION!
 #
 echo "Initializing submodules..."
-git submodule update --init --recursive
+git $GIT_ADDITIONAL submodule update --init --recursive
 
 if [ -n "$STOW_ACTION" ]; then
 	echo "Unstowing packages..."
