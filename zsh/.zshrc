@@ -70,7 +70,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git macos)
+plugins=(git macos ssh rsync)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -113,5 +113,5 @@ export GPG_TTY=$(tty)
 # Run homebrew stuff.
 eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 
-# Set bat as MANPAGER for better man pages.
-export MANPAGER="sh -c 'col -bx | /opt/homebrew/bin/bat -lman'"
+# Set neovim as MANPAGER for better man pages.
+export MANPAGER='nvim +Man!'
