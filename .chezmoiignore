@@ -4,5 +4,8 @@ LICENSE
 
 {{ if ne .chezmoi.os "linux" }}
 .config/yakuakerc
+.config/btop
+.config/fish
+.config/qBittorrent
 {{ end }}
 
