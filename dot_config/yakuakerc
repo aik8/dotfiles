@@ -1,0 +1,12 @@
+[Animation]
+Frames=10
+
+[Dialogs]
+FirstRun=false
+
+[Window]
+Height=100
+KeepOpen=false
+Position=100
+ShowSystrayIcon=false
+Width=45

@@ -1,0 +1,8 @@
+README.md
+LICENSE
+*.log
+
+{{ if ne .chezmoi.os "linux" }}
+.config/yakuakerc
+{{ end }}
+

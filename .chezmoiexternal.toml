@@ -1,0 +1,54 @@
+# Oh-My-ZSH ====================================================================
+[".oh-my-zsh"]
+type = "archive"
+url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
+exact = true
+stripComponents = 1
+
+[".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"]
+type = "archive"
+url = "https://github.com/zsh-users/zsh-syntax-highlighting/archive/master.tar.gz"
+exact = true
+stripComponents = 1
+
+# tmux =========================================================================
+[".tmux/plugins/tpm"]
+type = "archive"
+url = "https://github.com/tmux-plugins/tpm/archive/refs/heads/master.zip"
+exact = true
+stripComponents = 1
+
+[".tmux/plugins/tmux"]
+type = "archive"
+url = "https://github.com/catppuccin/tmux/archive/refs/heads/main.zip"
+exact = true
+stripComponents = 1
+
+[".tmux/plugins/tmux-battery"]
+type = "archive"
+url = "https://github.com/tmux-plugins/tmux-battery/archive/refs/heads/master.zip"
+exact = true
+stripComponents = 1
+
+[".tmux/plugins/tmux-cpu"]
+type = "archive"
+url = "https://github.com/tmux-plugins/tmux-cpu/archive/refs/heads/master.zip"
+exact = true
+stripComponents = 1
+
+[".tmux/plugins/tmux-sensible"]
+type = "archive"
+url = "https://github.com/tmux-plugins/tmux-sensible/archive/refs/heads/master.zip"
+exact = true
+stripComponents = 1
+
+[".tmux/plugins/vim-tmux-navigator"]
+type = "archive"
+url = "https://github.com/christoomey/vim-tmux-navigator/archive/refs/heads/master.zip"
+exact = true
+stripComponents = 1
+
+# nvim =========================================================================
+[".config/nvim"]
+type = "git-repo"
+url = "https://github.com/aik8/nvim"
