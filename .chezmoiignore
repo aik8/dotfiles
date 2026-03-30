@@ -3,6 +3,7 @@ LICENSE
 *.log
 
 {{ if ne .chezmoi.os "linux" }}
+.bashrc
 .config/yakuakerc
 .config/btop
 .config/fish
