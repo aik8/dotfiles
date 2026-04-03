@@ -2,6 +2,8 @@ README.md
 LICENSE
 *.log
 
+.oh-my-zsh/cache
+
 {{ if ne .chezmoi.os "linux" }}
 .bashrc
 .config/yakuakerc
