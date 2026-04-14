@@ -3,11 +3,14 @@ encryption = "gpg"
 [gpg]
 recipient = "email@example.com"
 
-[data]
+[data.git]
 name = "Some Name"
 email = "email@example.com"
 signingkey = "AAAAAAAAAAAAAA"
 gpgsign = "false"
 
-omztheme = "robbyrussell"
-tmux_catppuccin_window_status_style = "slanted"
+[data.omz]
+theme = "robbyrussell"
+
+[data.tmux]
+catppuccin_window_status_style = "slanted"
