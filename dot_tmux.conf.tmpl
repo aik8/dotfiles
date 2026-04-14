@@ -29,7 +29,7 @@ run ~/.tmux/plugins/tmux/catppuccin.tmux
 
 # Configure the theme.
 set -g @catppuccin_flavour 'mocha'
-set -g @catppuccin_window_status_style 'slanted'
+set -g @catppuccin_window_status_style '{{ .catppuccin_window_status_style }}'
 
 # Make the status line pretty and add some modules.
 set -g status-right-length 100
