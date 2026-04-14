@@ -13,3 +13,6 @@ LICENSE
 .SxxB80xProfile.icm
 {{ end }}
 
+{{ if eq .skipssh true }}
+.ssh/config
+{{ end }}
