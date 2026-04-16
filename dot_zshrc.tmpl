@@ -65,6 +65,11 @@ HIST_STAMPS="yyyy-mm-dd"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+{{- if eq .chezmoi.os "linux" }}
+# Start a new tmux session or attach to the last one.
+ZSH_TMUX_AUTOSTART=true
+{{ end }}
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -73,7 +78,7 @@ HIST_STAMPS="yyyy-mm-dd"
 {{- if eq .chezmoi.os "darwin" }}
 plugins=(git macos ssh rsync chezmoi zsh-syntax-highlighting)
 {{- else if eq .chezmoi.os "linux" }}
-plugins=(git debian ssh rsync chezmoi zsh-syntax-highlighting)
+plugins=(git debian ssh rsync chezmoi zsh-syntax-highlighting tmux)
 {{- end }}
 
 source $ZSH/oh-my-zsh.sh
