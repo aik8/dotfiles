@@ -125,3 +125,29 @@ alias ls="/usr/bin/lsd"
 # Set neovim as MANPAGER for better man pages.
 export MANPAGER='nvim +Man!'
 
+# Set tmux window title to current path, or host:path over SSH.
+_tmux_title() {
+  [ -z "$TMUX" ] && return
+
+  if [ -n "SSH_CONNECTION" ]; then
+	printf '\033]2;%s:%s\033\\' "$(hostname -s)" "${PWD/#$HOME/~}"
+  else
+	printf '\033]2;%s\033\\' "${PWD/#$HOME/~}"
+  fi
+}
+
+ssh() {
+  if [ -n "$TMUX" ]; then
+	# Extract the hostname (last non-option argument before any command).
+	local host="${@: -1}"
+	printf '\033]2;%s\033\\' "$host"
+	command ssh "$@"
+	# Restore local title after SSH exits.
+	_tmux_title
+  else
+	command ssh "$@"
+  fi
+}
+
+chpwd_functions+=(_tmux_title)
+  _tmux_title
