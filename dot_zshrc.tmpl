@@ -141,6 +141,8 @@ _tmux_title() {
   fi
 }
 
+# A wrapper for ssh. Uses the command parameters to set the proper\
+# window name for tmux, and then calls ssh.
 ssh() {
   if [ -n "$TMUX" ]; then
 	# Extract the hostname (last non-option argument before any command).
@@ -154,5 +156,7 @@ ssh() {
   fi
 }
 
+# Finally, add our _tmux_title to the chpwd functions of OMZ, and call
+# it once, so that it changes the title immediately.
 chpwd_functions+=(_tmux_title)
-  _tmux_title
+_tmux_title
