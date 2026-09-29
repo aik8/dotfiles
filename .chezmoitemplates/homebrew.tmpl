@@ -1,0 +1,7 @@
+{{ if eq .chezmoi.os "darwin" }}
+eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+alias ls="/opt/homebrew/bin/lsd"
+{{ else if eq .chezmoi.os "linux" }}
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+alias ls="/usr/bin/lsd"
+{{ end }}
