@@ -116,14 +116,8 @@ export EDITOR='nvim'
 # Make sure that GPG commit signing works on macOS.
 export GPG_TTY=$(tty)
 
-# Run homebrew stuff.
-{{- if eq .chezmoi.os "darwin" }}
-eval "$(/opt/homebrew/bin/brew shellenv zsh)"
-alias ls="/opt/homebrew/bin/lsd"
-{{- else if eq .chezmoi.os "linux" }}
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-alias ls="/usr/bin/lsd"
-{{- end }}
+# Add homebrew stuff.
+{{ trim (includeTemplate "homebrew.tmpl" .) }}
 
 # Set neovim as MANPAGER for better man pages.
 export MANPAGER='nvim +Man!'
