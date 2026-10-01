@@ -5,7 +5,6 @@ LICENSE
 .oh-my-zsh/cache
 
 {{ if ne .chezmoi.os "linux" }}
-.bashrc
 .config/yakuakerc
 .config/btop
 .config/fish
@@ -17,3 +16,4 @@ LICENSE
 {{ if eq .skipssh true }}
 .ssh/config
 {{ end }}
+
