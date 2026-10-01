@@ -152,3 +152,5 @@ ssh() {
 # it once, so that it changes the title immediately.
 chpwd_functions+=(_tmux_title)
 _tmux_title
+
+{{ trim (includeTemplate "direnv.tmpl" .) }}
