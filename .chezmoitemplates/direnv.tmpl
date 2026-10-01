@@ -1,4 +1,4 @@
 {{ if .direnv }}
 # Add direnv hook.
-eval "$(direnv hook bash)"
+eval "$(direnv hook {{ .shell }})"
 {{ end }}

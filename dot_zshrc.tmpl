@@ -153,4 +153,4 @@ ssh() {
 chpwd_functions+=(_tmux_title)
 _tmux_title
 
-{{ trim (includeTemplate "direnv.tmpl" .) }}
+{{ trim (includeTemplate "direnv.tmpl" (dict "direnv" .direnv "shell" "zsh")) }}

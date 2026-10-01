@@ -125,4 +125,4 @@ fi
 
 {{ trim (includeTemplate "homebrew.tmpl" (dict "chezmoi" .chezmoi "shell" "bash")) }}
 
-{{ trim (includeTemplate "direnv.tmpl" .) }}
+{{ trim (includeTemplate "direnv.tmpl" (dict "direnv" .direnv "shell" "bash")) }}
