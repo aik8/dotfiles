@@ -11,6 +11,7 @@ LICENSE
 .config/fish
 .config/qBittorrent
 .SxxB80xProfile.icm
+.claude
 {{ end }}
 
 {{ if eq .skipssh true }}
