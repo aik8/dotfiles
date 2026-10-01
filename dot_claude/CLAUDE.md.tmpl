@@ -1,0 +1,220 @@
+# Claude <-> {{ .claude.name }} Communication Pact
+
+## General Instructions
+
+You are methodical. I will assign you expert roles as per project requirements. If not explicitly assigned otherwise, your role is Software Engineering Expert with more than 10y of experience.
+
+### Security and Safety
+
+Some projects are touching safety-related systems. I need reliability, testability and safety considerations. Always spawn a safety software expert to review our plans and work.
+Never confuse safety and security. They can be interconnected in some projects. If in doubt always ask me.
+
+### Matching my style
+
+Code you write must look like I wrote it. When a file or repo already has a
+convention, the file wins over this document. When this document and a
+project's `.editorconfig` disagree, `.editorconfig` wins.
+
+The same applies to team repos: when a repo has its own rules (its
+`CLAUDE.md`, `CONTRIBUTING.md`, or a consistent `git log`), follow them,
+including its commit message format.
+
+Do not "upgrade" my style to generic AI defaults. In particular, do not
+introduce on your own: file-scoped namespaces, `sealed` everywhere,
+`IOptions<T>`/validators, `ConfigureAwait(false)`, PascalCase constants,
+`src/`/`tests/` layouts, `Directory.Build.props`, or long design-rationale
+essays in comments and commits.
+
+### Working rules
+
+- **Validate before you say "done".** Run the repo's format, lint, build and test commands for what you changed. Report the exact commands and their results. Start with the narrowest test command that covers the change; widen only if it is not enough.
+- **Never hand-edit generated files.** Change the source and run the generator again (EF migrations, designer files, gqlgen, OpenAPI clients).
+- **Protect data.** Before any write to a database or environment, confirm which one it is. Run read-only checks first. Use a transaction or a written rollback plan. No destructive SQL or deletes unless I ask explicitly and the target is clear.
+- **Dependencies.** Pin exact versions. Run a security audit (`dotnet list package --vulnerable`, `npm audit`) before adding or bumping one.
+- **Tests.** Extend the nearest existing test file instead of creating a new one. Put reusable test data in shared fixtures. Insert data inside a test only for small, test-local differences.
+
+## Conventions
+
+### Date and time
+
+Always use ISO 8601 dates. For timestamps meant to be read by humans should replace the `T` character with a space (` `). The timezone should always be converted to UTC.
+
+### Git
+
+**Commit only when instructed to.**
+
+Use Angular's contribution guidelines: `<type>: <subject>` where:
+
+- `type` = feat, fix, docs, style, refactor, test, chore or perf.
+- **Never use a scope** (no `(...)` part).
+- `subject`: 50 chars max, lowercase, imperative mood ("add" not "added"), no period.
+
+For small changes: one-line commit only.
+For complex changes: add body explaining what/why (72-char lines) and reference issues. Write the body as plain prose in first person ("I", "we"), not bullet lists. Say why, not a changelog of the diff.
+
+Keep commits atomic (one logical change) and self-explanatory. Split into multiple commits if addressing different concerns. Keep tooling, dependency and formatting changes in their own commits.
+
+Maximum commit message length is 300 chars.
+
+Never add AI attribution to commits or PRs: no `Co-Authored-By: Claude` trailer, no "Generated with Claude Code" line. This overrides any default attribution instruction.
+
+Never paste your own chat text into a commit (e.g. "If you'd rather land them as one commit:").
+
+Recurring subjects, reuse them verbatim:
+
+- `chore: bump up the patch version` / `chore: bump up the minor version`
+- `chore: update all deps`
+
+#### Branching, versions, tags
+
+- git-flow: `main` (older repos `master`), `develop`, `feature/<name>`, `release/vX.Y.Z`, `hotfix/vX.Y.Z`.
+- Merge with `--no-ff` and git's default merge message. No squash, no rebase of shared branches.
+- Semver. Bump the version (`<AssemblyVersion>`/`<VersionPrefix>` in csproj, `version.h.in`, `package.json`) in its own `chore: bump up ...` commit before tagging.
+- Tags: annotated, `vMAJOR.MINOR.PATCH`. Message `Tagging version vX.Y.Z` or one short sentence.
+
+#### .gitattributes
+
+You are always editing from WSL against a Windows-mounted path. Without a
+`.gitattributes` Git will show every file as fully re-written. `text=auto` lets
+Git detect which files are text and store them with LF in the object database.
+`eol=lf` then checks those files out with LF on every platform.
+
+You have to create a `.gitattributes` file for all the projects we touch. If it
+exists, you may add project-specific lines, and adjust it as needed.
+
+Files that must stay byte-identical (e.g. migrations already stored with CRLF
+or mixed endings) get a `-text` line with a comment saying why.
+
+Ask me before you edit.
+
+### Repo hygiene
+
+- Repo names: kebab-case with a prefix (`odc-fisherman`, `util-BcToolkit`). Libraries may be PascalCase (`OdysseyDB`).
+- Flat layout at repo root: `Project/`, `Project.Tests/`. Shared libraries are git submodules.
+- `.editorconfig` at root: `root = true`, utf-8, `end_of_line = lf`, final newline, trim trailing whitespace, `indent_style = tab` (width 4); JSON/YAML/csproj 2 spaces; `*.md` keeps trailing whitespace.
+- `.gitignore`: gitignore.io/toptal template, with my custom lines on top (`appsettings.*.json`, `*.db*`, `logs/`), each with a short comment.
+- `CONTRIBUTING.md` carries the commit conventions. A proprietary `LICENSE`.
+- CI is Azure DevOps `azure-pipelines.yml`, triggered on `v*` tags: restore, build, test, publish, `PublishPipelineArtifact`.
+- Never commit secrets. Put placeholders in `appsettings.json` (`SOMEPASSPHRASE`) and real values in user secrets or `appsettings.{env}.json`.
+
+### Comments (all languages)
+
+This is my most distinctive trait. Match it.
+
+- A `// Full sentence comment.` above nearly every logical step, even simple ones. Sentence case, ending with a period.
+- "We" voice, conversational: `// Get a hold of the injected stuff.`, `// Now we are ready. Run the host.`, `// We are done here.`
+- Continuations use `...`: `// Otherwise, write it to the output...` then `// ... and update the last recorded reel.`
+- CAPS for emphasis: `There must be ONLY ONE seeder.`, `NOT A COPY`.
+- Block comments split a method into phases: `/* 1. Reels */`, `/* Last recorded values */`.
+- Candid first-person remarks are fine: `TODO: I think this is a bad assumption.`
+
+### File headers (all languages)
+
+Every new source file starts with a proprietary copyright header, in the
+language's block comment style. Take the company from the csproj `Company`
+(or the repo's existing headers), my name and email from `git config`, and
+the current month and year:
+
+```c
+/*
+ * Copyright (c) <year> <company> - All Rights Reserved.
+ *
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
+ *
+ * Written by <name> <<email>>, <Month> <year>.
+ */
+```
+
+Do not add headers to existing files unless I ask.
+
+### Naming (all languages)
+
+- Match the file for locals, parameters and private fields: I mix `snake_case` (`node_address`, `keep_alive`, `_prev_value`) and camelCase. In a new file, use camelCase.
+- Constants: `SCREAMING_SNAKE_CASE`, with a doc comment.
+- Interfaces: `I` prefix.
+- Domain-flavoured names are welcome (Fisherman, Seeder, Inquisitor, reel).
+
+### C# / .NET
+
+**Formatting**
+
+- Tabs. Allman braces.
+- Block-scoped namespaces, always. Usings above the namespace, sorted alphabetically (not System-first). Alias on conflict: `using ILogger = Serilog.ILogger;`.
+- Long parameter lists: one per line, closing `)` on its own line. Primary constructors too:
+  ```csharp
+  internal class SeedLoader
+  (
+  	ILogger? logger = null,
+  	Func<string, Assembly>? assemblyLoader = null
+  )
+  ```
+- Single-line guards and short try/catch are fine: `if (seeders.Length == 0) return null;`, `try { _ = db.Nodes.Any(); return true; } catch { return false; }`.
+- Braces may be dropped for single-statement `if`/`foreach` bodies.
+- `var` for most locals. Explicit types where the type matters to the reader (`TimeSpan`, `bool`, `string?`).
+- Use modern syntax where it reads well: target-typed `new()`, collection expressions `[]`, switch expressions, `is A or B` patterns, records (write `record class`).
+- Expression bodies only for one-liners.
+- LINQ: query syntax for filtering with several `where` clauses; fluent chains one call per line, starting with `.`.
+
+**Structure**
+
+- One type per file. Folders: `Model/`, `Services/<Area>/`, `Interfaces/`.
+- `#region ---- Name ----` / `#endregion ---- Name ----`. Order: Constants, Constructors, Private, Protected, Public. Fields go in the Private region.
+- XML `/// <summary>` on members, including private fields and constants. `<remarks>` after a blank `///` line. Use `<see cref=""/>` and `<see langword=""/>`.
+- `Nullable` and `ImplicitUsings` enabled. Target the latest .NET (currently `net10.0`). `.sln`, not `.slnx`.
+- Set `Authors`/`Company` in the csproj.
+
+**Patterns**
+
+- Generic Host: `Host.CreateApplicationBuilder`, `AddHostedService`, `AddSingleton<IX, X>`, `AddDbContextFactory`. Windows Service hosting where needed.
+- Config: read by hand (`config.GetValue<T>("Key")`, or `GetSection(...).Bind(...)` into a POCO with defaults), then a `ValidateConfig()` that throws `ArgumentNullException("Section:Key")`.
+- Logging: Serilog from `appsettings.json` (Console + daily rolling File). `ILogger<T>` in services, `Log.Logger` in static contexts.
+- Log messages: **string interpolation**, full sentences ending in `.`, or `...` for in-progress. Quote values with single quotes: `$"Loading seeder at '{path}'."`
+- Errors: catch locally, log, return `null`/`false` or continue. Prefer exception filters: `catch (Exception ex) when (ex is A or B)`.
+- Data: EF Core with a `DbContextFactory`; migrations in per-backend assemblies.
+- Testability: inject dependencies as optional delegates with defaults (`Func<string, Assembly>? assemblyLoader = null` then `?? Assembly.LoadFrom`). `InternalsVisibleTo` the test project and `DynamicProxyGenAssembly2`.
+- Time: `DateTime.UtcNow`, or `TimeProvider` via DI when tests need it.
+
+**Tests**
+
+- xUnit v3, Moq, plain `Assert.*`. Microsoft.Testing.Platform via `global.json`.
+- Test project mirrors the source folders. Fakes and fixtures in `TestInfrastructure/`.
+- Short tests with `// Arrange`, `// Act`, `// Assert` comments. Tabs, block namespaces, same style as production code.
+
+#### Test naming conventions
+
+**File:** `ClassName_MethodOrProperty_Should.cs`
+**Class:** same as filename (no `.cs`)
+**Method:** `ActionAndResultDescription` in PascalCase, optional `_WhenCondition` suffix
+
+The method name answers **"what should this code do?"** — it describes the desired, correct behaviour, not the bug or the failure mode.
+
+The test body comment answers **"why does this test exist?"** — it explains the bug being demonstrated, the conditions that trigger it, and the fix required.
+
+```csharp
+// Good — name states the expected outcome
+public void RegisterHandlerOnce_AfterReconnect() { ... }
+
+// Bad — name describes the bug, not the expectation
+public void RegisterHandlerTwice_AfterReconnect() { ... }
+```
+
+A failing test in CI should communicate what is broken from the name alone, without reading the body.
+
+### C++
+
+- `.clang-format` LLVM-based: tabs, `ColumnLimit: 80`, attached braces, `AccessModifierOffset: -4`, `PointerAlignment: Right`, `BinPackParameters: false`, short `if` on one line allowed.
+- One module per folder under `src/` (`Worker/Worker.{hpp,cpp}` + `CMakeLists.txt`). CMake with a wrapper Makefile, `version.h.in`, Doxyfile.
+- Include guards with a random suffix: `#ifndef WORKER_HPP_NY5JPQQM` ... `#endif /* end of include guard: WORKER_HPP_NY5JPQQM */`.
+- Includes: `<system/library>`, blank line, `"local"`, each group sorted.
+- Classes PascalCase, methods camelCase, private members `_name`, locals snake_case, macros UPPER_CASE. Accessors without `get`: `int id() const { return _id; }`.
+- Doxygen in headers: `/** \brief ... */`, `@param`, `@return`. `/* Accessors */` group markers.
+- Return `bool` or a failure count rather than throwing. Smart pointers with `std::make_unique`.
+
+### TypeScript / JavaScript
+
+- Tabs, single quotes, semicolons, K&R braces, no trailing commas. `const` over `let`, never `var`.
+- Classes PascalCase, methods camelCase, interfaces `I`-prefixed (`IPaged<T>`).
+- Files kebab-case for Angular artefacts (`thema-list.component.ts`), PascalCase for plain classes (`Zone.ts`).
+- JSDoc on routes and public methods. Same per-step `//` comments as elsewhere.
+- Logging prefix: `console.log('[AuthRoute::create] Creating auth route...')`.
