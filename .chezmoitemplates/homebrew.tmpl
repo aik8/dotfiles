@@ -1,7 +1,15 @@
+{{ $brew := "" }}
 {{ if eq .chezmoi.os "darwin" }}
-eval "$(/opt/homebrew/bin/brew shellenv zsh)"
-alias ls="/opt/homebrew/bin/lsd"
+{{   $brew = "/usr/local/bin/brew" }}
+{{   if eq .chezmoi.arch "arm64" }}
+{{      $brew = "/opt/homebrew/bin/brew" }}
+{{    end }}
 {{ else if eq .chezmoi.os "linux" }}
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-alias ls="/usr/bin/lsd"
+{{   $brew = "/home/linuxbrew/.linuxbrew/bin/brew" }}
 {{ end }}
+{{ if $brew }}
+# If homebrew is installed, add it to the env.
+if [ -x {{ $brew }} ]; then
+	eval "$({{ $brew }} shellenv {{ .shell }})"
+fi
+{{- end }}

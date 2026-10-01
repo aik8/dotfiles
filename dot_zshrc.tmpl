@@ -112,12 +112,12 @@ export EDITOR='nvim'
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+{{ trim (includeTemplate "lsd.tmpl" .) }}
 
 # Make sure that GPG commit signing works on macOS.
 export GPG_TTY=$(tty)
 
-# Add homebrew stuff.
-{{ trim (includeTemplate "homebrew.tmpl" .) }}
+{{ trim (includeTemplate "homebrew.tmpl" (dict "chezmoi" .chezmoi "shell" "zsh")) }}
 
 # Set neovim as MANPAGER for better man pages.
 export MANPAGER='nvim +Man!'

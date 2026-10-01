@@ -1,0 +1,6 @@
+{{ if eq .chezmoi.os "darwin" }}
+alias ls="/opt/homebrew/bin/lsd"
+{{ else if eq .chezmoi.os "linux" }}
+alias ls="/usr/bin/lsd"
+{{ end }}
+
