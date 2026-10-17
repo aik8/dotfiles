@@ -31,7 +31,7 @@ PenaltyBreakString: 1000
 PenaltyBreakFirstLessLess: 120
 PenaltyExcessCharacter: 1000
 PenaltyReturnTypeOnItsOwnLine: 60
-PointerAlignment: Left
+PointerAlignment: Right
 SpacesBeforeTrailingComments: 1
 Cpp11BracedListStyle: false
 Standard: Cpp11
@@ -60,7 +60,6 @@ AlignConsecutiveAssignments:
   AcrossEmptyLines: false
   AcrossComments: false
   AlignCompound: true
-  AlignFunctionDeclarations: true
   AlignFunctionPointers: false
   PadOperators: true
 AlignConsecutiveMacros:
@@ -76,9 +75,7 @@ AlignConsecutiveDeclarations:
 BreakAfterAttributes: Always
 EmptyLineAfterAccessModifier: Leave
 EmptyLineBeforeAccessModifier: Always
-EnumTrailingComma: Remove
 FixNamespaceComments: true
-IndentExportBlock: true
 IndentExternBlock: Indent
 SpaceBeforeJsonColon: false
 SpaceBeforeInheritanceColon: true
@@ -87,14 +84,12 @@ SpaceBeforeCpp11BracedList: false
 SpaceBeforeCaseColon: false
 SpaceAroundPointerQualifiers: Default
 SpaceAfterTemplateKeyword: true
-SpaceAfterOperatorKeyword: false
 SpaceAfterLogicalNot: false
 SpaceAfterCStyleCast: false
 SortUsingDeclarations: Lexicographic
-SortIncludes:
-  Enabled: true
+SortIncludes: CaseSensitive
 RemoveBracesLLVM: true
-ReflowComments: Always
+ReflowComments: true
 LambdaBodyIndentation: Signature
 IncludeBlocks: Regroup
 AlignOperands: AlignAfterOperator
@@ -103,3 +98,4 @@ SpaceInEmptyBlock: true
 SpaceBeforeSquareBrackets: false
 SpaceBeforeRangeBasedForLoopColon: true
 InsertNewlineAtEOF: true
+
